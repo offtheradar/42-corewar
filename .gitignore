@@ -1,0 +1,10 @@
+*.DS_Store*
+*sublime*
+.nfs.*
+*.h.gch
+*.o
+a.out
+test*
+*.dSYM
+vm_champs
+._*
