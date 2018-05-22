@@ -17,9 +17,9 @@
 
 typedef	struct      s_vm
 {
-    t_champ         champs[MAX_PLAYERS];
-    unsigned int	curr_champ;
-    unsigned int    nbr_cycles;
+	t_champ         champs[MAX_PLAYERS];
+	unsigned int	curr_champ;
+	unsigned int    nbr_cycles;
 }					t_vm;
 
 typedef struct 		s_champ
@@ -27,5 +27,37 @@ typedef struct 		s_champ
 	t_header		header;
 	unsigned char	*prog;
 }					t_champ;
+
+/*
+****************************** Create VM struct ********************************
+*/
+
+t_vm				create_vm(void);
+
+/*
+****************************** Handle Args *************************************
+*/
+
+int					iter_args(int ac, char **av, t_vm *vm);
+
+int					parse_args(int *i, int ac, char **av, t_vm *vm);
+
+/*
+****************************** Open and Load File ******************************
+*/
+
+int					open_file(char *file_name);
+
+int					handle_cor_file(int fd);
+
+int					handle_file(char *file_name, t_vm *vm);
+
+int					read_file_header(int fd, t_header *header);
+
+int					read_file_program(int fd, t_champ *champ);
+
+/*
+****************************** Setup Player ************************************
+*/
 
 #endif

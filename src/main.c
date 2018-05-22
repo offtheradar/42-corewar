@@ -12,6 +12,11 @@
 
 #include "../includes/vm.h"
 
+/*
+** Creates an instance of a vm struct and initialize the variables
+** of the struct. 
+*/
+
 t_vm	create_vm(void)
 {
 	t_vm	new_vm;

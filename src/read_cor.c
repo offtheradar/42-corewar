@@ -12,6 +12,10 @@
 
 #include "../includes/vm.h"
 
+/*
+** Safely open the file. 
+*/
+
 int		open_file(char *file_name)
 {
 	int fd;
@@ -24,15 +28,27 @@ int		open_file(char *file_name)
 	return (fd);
 }
 
+/*
+** Open the file and check whether the extension is a .cor
+*/
+
 int		handle_file(char *file_name, t_vm *vm)
 {
 	int fd;
 
 	fd = open_file(file_name);
 	if (handle_cor_file(fd))
-		return ();
-	read_file_header(fd, vm->header)
+		return (-1);
+	if (read_file_header(fd, vm->header))
+		return ;
+	if (read_file_header)
+		return ;
+
 }
+
+/*
+** Check if extension is .cor
+*/
 
 int		handle_cor_file(int fd)
 {
@@ -44,6 +60,16 @@ int		handle_cor_file(int fd)
 		len--;
 	return (!ft_strcmp((file_name + len), ".cor"));
 }
+
+/*
+** Read the file header.
+** 1) 4 bytes for the .cor magic number
+** 2) PROG_NAME_LENGTH bytes for the program name
+** 3) 4 bytes for 0 buffer
+** 4) 4 bytes for program size
+** 5) COMMENT_LENGTH bytes for the comment
+** 6) 4 bytes for 0 buffer
+*/
 
 int		read_file_header(int fd, t_header *header)
 {

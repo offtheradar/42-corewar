@@ -12,24 +12,34 @@
 
 #include "../includes/vm.h"
 
+/*
+** Verify whether the argument if the argument is valid, load to appropriate 
+** variable if so, return an error code otherwise.
+*/
+
 int		parse_args(int *i, int ac, char **av, t_vm *vm)
 {
-		if (ft_strequ(av[*i], "-dump") == 0)
-		{
-			i++;
-			return (i < ac && vm->nbr_cycles = ft_atoi(av[i]));
-		}
-		if (ft_strequ(av[*i], "-n") == 0)
-		{
-			i++;
-			return (i < ac && vm->curr_champ = ft_atoi(av[i]));
-		}
-		if (handle_file(av[*i], vm))
-		{
-			ft_putstr_fd("File Error!, Enter a .cor file.", 2);
-			exit(0);
-		}
+	if (ft_strequ(av[*i], "-dump") == 0)
+	{
+		(*i)++;
+		return (i < ac && vm->nbr_cycles = ft_atoi(av[i]));
+	}
+	else if (ft_strequ(av[*i], "-n") == 0)
+	{
+		(*i)++;
+		return (i < ac && vm->curr_champ = ft_atoi(av[i]));
+	}
+	else if (handle_file(av[*i], vm->champ[curr->champ]) == -1)
+	{
+		ft_putstr_fd("File Error!, Enter a .cor file.", 2);
+		return (-1);
+	}
+	return (1);
 }
+
+/*
+** Iterate throught the list of arguments, call parse args.
+*/
 
 int		iter_args(int ac, char **av, t_vm *vm)
 {
