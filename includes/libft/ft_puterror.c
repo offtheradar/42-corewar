@@ -10,4 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/vm.h"
+#include "libft.h"
+
+int		ft_puterror(int err, char *message)
+{
+	ft_putstr_fd("Error: ", 2);
+	ft_putstr_fd(message, 2);
+	ft_putstr_fd("\n",2);
+	return (err);
+}

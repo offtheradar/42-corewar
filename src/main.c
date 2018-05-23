@@ -31,5 +31,5 @@ int		main(int ac, char **av)
 	t_vm	vm;
 
 	vm = create_vm();
-	parse_args(ac, av, &vm);
+	iter_args(ac, av, &vm);
 }

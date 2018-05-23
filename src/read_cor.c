@@ -37,28 +37,29 @@ int		handle_file(char *file_name, t_vm *vm)
 	int fd;
 
 	fd = open_file(file_name);
-	if (handle_cor_file(fd))
-		return (-1);
-	if (read_file_header(fd, vm->header))
-		return ;
-	if (read_file_header)
-		return ;
-
+	if (get_next_player(vm))
+		return (1);
+	if (handle_cor_file(file_name))
+		return (1);
+	if (read_file_header(fd, &(vm->champs[vm->curr_champ].header)))
+		return (1);
+	if (read_file_program(fd, &(vm->champs[vm->curr_champ])))
+		return (1);
+	return (-1);
 }
 
 /*
 ** Check if extension is .cor
 */
 
-int		handle_cor_file(int fd)
+int		handle_cor_file(char *file_name)
 {
-	int	len;
+	int len;
 
-	
 	len = ft_strlen(file_name);
 	while (*file_name && *(file_name + len) != '.')
 		len--;
-	return (!ft_strcmp((file_name + len), ".cor"));
+	return (!ft_strequ((file_name + len), ".cor"));
 }
 
 /*
@@ -75,22 +76,23 @@ int		read_file_header(int fd, t_header *header)
 {
 	unsigned char buff[4];
 
-	if (!(read(fd, header->magic, 4) == 4 &&
-		ft_memcmp(header->magic, COREWAR_EXEC_MAGIC, 4) == 0))
-		return (-1);
+	if (!(read(fd, buff, 4) == 4 &&
+		ft_memcmp(buff, COREWAR_EXEC_MAGIC, 4) == 0))
+		return (ft_puterror(-1, "Invalid Magic Number."));
 	read(fd, header->prog_name, PROG_NAME_LENGTH);
 	header->prog_name[PROG_NAME_LENGTH] = '\0';
 	if (!(read(fd, buff, 4) == 4 &&
 		ft_memcmp(buff, "\0\0\0\0", 4) == 0))
-		return (-1);
-	if (!(read(fd, header->prog_size, 4) == 4))
-		return (-1);
+		return (ft_puterror(-1, "Incorrect buffer"));
+	if (!(read(fd, buff, 4) == 4))
+		return (ft_puterror(-1, "Incorrect program size."));
+	header->prog_size = (unsigned int)buff;
 	if (!(read(fd, header->comment, COMMENT_LENGTH)))
-		return (-1);
+		return (ft_puterror(-1, "Invalid comment."));
 	header->comment[COMMENT_LENGTH] = '\0';
 	if (!(read(fd, buff, 4) == 4 &&
 		ft_memcmp(buff, "\0\0\0\0", 4) == 0))
-		return (-1);
+		return (ft_puterror(-1, "Invalid buffer between comment and program."));
 	return (1);
 }
 
@@ -104,6 +106,6 @@ int		read_file_program(int fd, t_champ *champ)
 					champ->header.prog_size);
 	if (read(fd, champ->prog, champ->header.prog_size) !=
 				champ->header.prog_size)
-		return (-1);
+		return (ft_puterror(-1, "Invalid program."));
 	return (1);
 }

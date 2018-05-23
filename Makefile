@@ -16,7 +16,6 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -o
 
 FILES = main.c
-FILES += op.c
 FILES += parse_args.c
 FILES += read_cor.c
 

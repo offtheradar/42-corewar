@@ -29,6 +29,8 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
+int					ft_puterror(int err, char *message);
+
 void    			ft_putstrn(char const *s, unsigned int n);
 
 void    			ft_putstrn_fd(char const *s, int fd, unsigned int n);

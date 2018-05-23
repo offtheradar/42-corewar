@@ -15,18 +15,19 @@
 # include "op.h"
 # include "libft/libft.h"
 
-typedef	struct      s_vm
-{
-	t_champ         champs[MAX_PLAYERS];
-	unsigned int	curr_champ;
-	unsigned int    nbr_cycles;
-}					t_vm;
-
 typedef struct 		s_champ
 {
 	t_header		header;
+	int				id;
 	unsigned char	*prog;
 }					t_champ;
+
+typedef	struct      s_vm
+{
+	t_champ         champs[MAX_PLAYERS];
+	int				curr_champ;
+	int    			nbr_cycles;
+}					t_vm;
 
 /*
 ****************************** Create VM struct ********************************
@@ -48,7 +49,7 @@ int					parse_args(int *i, int ac, char **av, t_vm *vm);
 
 int					open_file(char *file_name);
 
-int					handle_cor_file(int fd);
+int					handle_cor_file(char *file_name);
 
 int					handle_file(char *file_name, t_vm *vm);
 

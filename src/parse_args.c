@@ -19,22 +19,19 @@
 
 int		parse_args(int *i, int ac, char **av, t_vm *vm)
 {
-	if (ft_strequ(av[*i], "-dump") == 0)
+	if (ft_strequ(av[*i], "-dump") == 1)
 	{
 		(*i)++;
-		return (i < ac && vm->nbr_cycles = ft_atoi(av[i]));
+		return (((*i) < ac && (vm->nbr_cycles = ft_atoi(av[*i])) > 0) ? 1 : -1);
 	}
-	else if (ft_strequ(av[*i], "-n") == 0)
+	else if (ft_strequ(av[*i], "-n") == 1)
 	{
 		(*i)++;
-		return (i < ac && vm->curr_champ = ft_atoi(av[i]));
+		return (((*i) < ac && (vm->curr_champ = ft_atoi(av[*i])) >= 0) ? 1 : -1);
 	}
-	else if (handle_file(av[*i], vm->champ[curr->champ]) == -1)
-	{
-		ft_putstr_fd("File Error!, Enter a .cor file.", 2);
-		return (-1);
-	}
-	return (1);
+	else if (handle_file(av[*i], vm))
+		return (1);
+	return (-1);
 }
 
 /*
@@ -49,6 +46,7 @@ int		iter_args(int ac, char **av, t_vm *vm)
 	while (++i < ac)
 	{
 		if (parse_args(&i, ac, av, vm) == -1)
-			return (-1);
+			return (ft_puterror(-1, "Parsing Error"));
 	}
+	return (1);
 }
